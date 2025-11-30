@@ -22,10 +22,15 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   <PropertyGroup>
     <!-- 
       Determine the target platform for WinRT.Host.dll selection.
-      Priority: Platform (if not AnyCPU) -> PlatformTarget -> fallback to x86.
+      Priority: RuntimeIdentifier -> PlatformTarget -> Platform (if not AnyCPU) -> fallback to x86.
+      RuntimeIdentifier values like win-x64, win-x86, win-arm64 are mapped.
     -->
-    <CsWinRTAuthoring_Platform Condition="'$(Platform)' != '' AND '$(Platform)' != 'AnyCPU'">$(Platform)</CsWinRTAuthoring_Platform>
+    <CsWinRTAuthoring_Platform Condition="'$(RuntimeIdentifier)' == 'win-x64'">x64</CsWinRTAuthoring_Platform>
+    <CsWinRTAuthoring_Platform Condition="'$(CsWinRTAuthoring_Platform)' == '' AND '$(RuntimeIdentifier)' == 'win-x86'">x86</CsWinRTAuthoring_Platform>
+    <CsWinRTAuthoring_Platform Condition="'$(CsWinRTAuthoring_Platform)' == '' AND '$(RuntimeIdentifier)' == 'win-arm64'">arm64</CsWinRTAuthoring_Platform>
+    <CsWinRTAuthoring_Platform Condition="'$(CsWinRTAuthoring_Platform)' == '' AND '$(RuntimeIdentifier)' == 'win-arm'">arm</CsWinRTAuthoring_Platform>
     <CsWinRTAuthoring_Platform Condition="'$(CsWinRTAuthoring_Platform)' == '' AND '$(PlatformTarget)' != ''">$(PlatformTarget)</CsWinRTAuthoring_Platform>
+    <CsWinRTAuthoring_Platform Condition="'$(CsWinRTAuthoring_Platform)' == '' AND '$(Platform)' != '' AND '$(Platform)' != 'AnyCPU'">$(Platform)</CsWinRTAuthoring_Platform>
     <CsWinRTAuthoring_Platform Condition="'$(CsWinRTAuthoring_Platform)' == ''">x86</CsWinRTAuthoring_Platform>
   </PropertyGroup>
 
