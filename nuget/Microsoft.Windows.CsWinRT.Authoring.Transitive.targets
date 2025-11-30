@@ -9,8 +9,15 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <!-- 
+      Determine the target platform for WinRT.Host.dll selection.
+      Priority: Platform (if not AnyCPU) -> PlatformTarget -> fallback to x86 for AnyCPU.
+      Win32 is normalized to x86.
+    -->
     <_NormalizedPlatform Condition="'$(Platform)' == 'Win32'">x86</_NormalizedPlatform>
-    <_NormalizedPlatform Condition="'$(_NormalizedPlatform)' == ''">$(Platform)</_NormalizedPlatform>
+    <_NormalizedPlatform Condition="'$(_NormalizedPlatform)' == '' AND '$(Platform)' != '' AND '$(Platform)' != 'AnyCPU'">$(Platform)</_NormalizedPlatform>
+    <_NormalizedPlatform Condition="'$(_NormalizedPlatform)' == '' AND '$(PlatformTarget)' != ''">$(PlatformTarget)</_NormalizedPlatform>
+    <_NormalizedPlatform Condition="'$(_NormalizedPlatform)' == ''">x86</_NormalizedPlatform>
   </PropertyGroup>
 
   <ItemGroup>
