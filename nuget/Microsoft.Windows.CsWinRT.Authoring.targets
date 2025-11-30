@@ -22,7 +22,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   <PropertyGroup>
     <!-- 
       Determine the target platform for WinRT.Host.dll selection.
-      Priority: Platform (if not AnyCPU) -> PlatformTarget -> fallback to x86 for AnyCPU.
+      Priority: Platform (if not AnyCPU) -> PlatformTarget -> fallback to x86.
     -->
     <CsWinRTAuthoring_Platform Condition="'$(Platform)' != '' AND '$(Platform)' != 'AnyCPU'">$(Platform)</CsWinRTAuthoring_Platform>
     <CsWinRTAuthoring_Platform Condition="'$(CsWinRTAuthoring_Platform)' == '' AND '$(PlatformTarget)' != ''">$(PlatformTarget)</CsWinRTAuthoring_Platform>
